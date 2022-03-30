@@ -47,12 +47,12 @@ module.exports = {
     //  network_id: "*",       // Any network (default: none)
     // },
 
-    // development: {
-    //   host: "localhost",
-    //   port: 7545,
-    //   gas: "6721975",
-    //   network_id: "*" // Match any network id
-    // }
+    development: {
+      host: "localhost",
+      port: 7545,
+      // gas: "6721975",
+      network_id: "*" // Match any network id
+    }
 
 
     // Another network with more advanced options...
