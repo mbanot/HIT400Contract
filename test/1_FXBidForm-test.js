@@ -154,64 +154,64 @@ contract('FXBidForm', function(accounts) {
 		})
 
 	// Test for creation and sale of an Eastate Property
-	it('Should be able to sort the bids by exchange rate',  async () => {
-		await FXAuction.deployed().then(async function(fxBidForm) {
-			await fxBidForm.submitBid(
-				{
-					fxBidFormListingId: 0,
-					applicantName: "Tafara Mbano 4",
-					dateOfIncorporation: "22/01/1994",
-					tradingCommencementDate: "05/03/1994",
-					identificationNumber: "0497985480",
-					categoryOfBidder: "PRIMARY",
-					physicalAddress: "6020 Westlea",
-					emailAddress: "tmmmbano@gmail.com",
-					contactNumber: "0783461408",
-					applicantBank: "NMB Bank",
-					auctionRef: "378473",
-					priorExhangeControlNumber: "N/A",
-					date: 1646379440,
+	// it('Should be able to sort the bids by exchange rate',  async () => {
+	// 	await FXAuction.deployed().then(async function(fxBidForm) {
+	// 		await fxBidForm.submitBid(
+	// 			{
+	// 				fxBidFormListingId: 0,
+	// 				applicantName: "Tafara Mbano 4",
+	// 				dateOfIncorporation: "22/01/1994",
+	// 				tradingCommencementDate: "05/03/1994",
+	// 				identificationNumber: "0497985480",
+	// 				categoryOfBidder: "PRIMARY",
+	// 				physicalAddress: "6020 Westlea",
+	// 				emailAddress: "tmmmbano@gmail.com",
+	// 				contactNumber: "0783461408",
+	// 				applicantBank: "NMB Bank",
+	// 				auctionRef: "378473",
+	// 				priorExhangeControlNumber: "N/A",
+	// 				date: 1646379440,
 			
-					economicSector: "Manufacturing",
-					purposeOfFunds: "Raw Materials",
-					descriptionOfGoods: "Iron ore",
-					ultimateBeneficiary: "Zimbabwe",
-					bidAmountUSD: 20,
-					bidExchangeRate: 180,
-					zwlEquivalent: 3600,
-					currentBalanceZWL: 1020293944,
-					currentNostroBalanceUSD: 809,
+	// 				economicSector: "Manufacturing",
+	// 				purposeOfFunds: "Raw Materials",
+	// 				descriptionOfGoods: "Iron ore",
+	// 				ultimateBeneficiary: "Zimbabwe",
+	// 				bidAmountUSD: 20,
+	// 				bidExchangeRate: 180,
+	// 				zwlEquivalent: 3600,
+	// 				currentBalanceZWL: 1020293944,
+	// 				currentNostroBalanceUSD: 809,
 
-					allocatedAmountBlance: 0,
-					allocationStatus: false
-				}
-			)
+	// 				allocatedAmountBlance: 0,
+	// 				allocationStatus: false
+	// 			}
+	// 		)
 
-			let sortedBids = await fxBidForm.sortBids();
-			console.log("-----------------SORTED BIDS--------------")
-			console.log(sortedBids)
-			assert.equal(sortedBids[0].exchangeRate, 124);
-			assert.equal(sortedBids[3].exchangeRate, 134);
+	// 		let sortedBids = await fxBidForm.sortBids();
+	// 		console.log("-----------------SORTED BIDS--------------")
+	// 		console.log(sortedBids)
+	// 		assert.equal(sortedBids[0].exchangeRate, 124);
+	// 		assert.equal(sortedBids[3].exchangeRate, 134);
 	
-		});
-	})
+	// 	});
+	// })
 
-	it('Should be able to allocate funds',  async () => {
-		await FXAuction.deployed().then(async function(fxBidForm) {
+	// it('Should be able to allocate funds',  async () => {
+	// 	await FXAuction.deployed().then(async function(fxBidForm) {
 		
-			let sortedBids = await fxBidForm.sortBids();
-			await fxBidForm.allocateFunds(sortedBids);
+	// 		let sortedBids = await fxBidForm.sortBids();
+	// 		await fxBidForm.allocateFunds(sortedBids);
 
-			sortedBids = await fxBidForm.sortBids();
-			console.log(sortedBids);
+	// 		sortedBids = await fxBidForm.sortBids();
+	// 		console.log(sortedBids);
 
-			let bid = await fxBidForm.findPrimaryBidById(0);
-			assert.equal(bid.allocationStatus,false);
+	// 		let bid = await fxBidForm.findPrimaryBidById(0);
+	// 		assert.equal(bid.allocationStatus,false);
 
-			let lastBid = await fxBidForm.findPrimaryBidById(4);
-			assert.equal(lastBid.allocationStatus,true);
+	// 		let lastBid = await fxBidForm.findPrimaryBidById(4);
+	// 		assert.equal(lastBid.allocationStatus,true);
 	
-		});
-	})
+	// 	});
+	// })
 
 })
