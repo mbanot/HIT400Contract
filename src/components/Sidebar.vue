@@ -14,12 +14,6 @@
 
         <v-list-item-title>&nbsp;&nbsp;RBZ Foreign Exchange Auction System</v-list-item-title>
 
-<!--        <v-btn-->
-<!--            icon-->
-<!--            @click.stop="mini = !mini"-->
-<!--        >-->
-<!--          <v-icon>mdi-chevron-left</v-icon>-->
-<!--        </v-btn>-->
       </v-list-item>
       <v-divider></v-divider>
 
@@ -27,7 +21,7 @@
         <v-list-item-group
             v-model="selectedItem"
         >
-          <span v-if="false">
+          <span v-if="getRole() == 'authorised_dealer'">
             <v-list-item
                 v-for="item in items"
                 :key="item.title"
@@ -44,7 +38,7 @@
 
           <v-btn  v-if="!$auth.isAuthenticated" @click="login()" block>Login</v-btn>
           </span>
-          <span   v-if="true">
+          <span   v-if="getRole() == 'rbz_admin'">
           <v-list-item
                 v-for="item in items2"
                 :key="item.title"
@@ -116,15 +110,7 @@ export default {
       this.$auth.login()
     },
     getRole(){
-      // let users = localStorage.getItem('users')
-      // alert(users.length)
-      // users.find((o, i) => {
-      //   alert(o)
-      //     if(o.email == this.$auth.user.username){
-      //       alert('getting role' + o)
-      //       return users[i].role
-      //     }
-      //   });
+
       if(this.$auth.user.username == 'tmmmbano@gmail.com'){
         return 'rbz_admin'
       }
@@ -134,9 +120,6 @@ export default {
     }
 
   },
-  mounted() {
-    
-  }
 }
 </script>
 

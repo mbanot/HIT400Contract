@@ -200,11 +200,6 @@
 import FxAuction from '../abis/FXAuction.json'
 
 export default ({
-  mounted() {
-      // if(this.$msal.isAuthenticated() != true){
-      //   this.$router.push({name: 'login'})
-      // }
-    },
     data(){
       return {
         startTime: '',

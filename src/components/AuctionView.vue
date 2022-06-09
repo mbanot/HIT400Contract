@@ -70,7 +70,7 @@
               </v-row>
 
 
-              <v-card-actions v-if="getRole() == 'rbz_admin'">
+              <v-card-actions v-if="true">
                 
                 <v-btn
                   color="success"
@@ -299,15 +299,6 @@ import FxAuction from '../abis/FXAuction.json'
       },
       
     getRole(){
-      // let users = localStorage.getItem('users')
-      // alert(users.length)
-      // users.find((o, i) => {
-      //   alert(o)
-      //     if(o.email == this.$auth.user.username){
-      //       alert('getting role' + o)
-      //       return users[i].role
-      //     }
-      //   });
         if(this.$auth.user.email == 'tmmmbano@gmail.com'){
           return 'rbz_admin'
         }
@@ -338,7 +329,7 @@ import FxAuction from '../abis/FXAuction.json'
 
       sortBids (bids){
         return bids.slice().sort(function(a, b){
-          return (a.bidExchangeRate > b.bidExchangeRate) ? -1 : 1;
+          return (a.bidExchangeRate < b.bidExchangeRate) ? -1 : 1;
         });
       },
 

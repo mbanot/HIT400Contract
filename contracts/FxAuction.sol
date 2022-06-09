@@ -4,6 +4,9 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract FXAuction {
 
+    constructor() {
+    }
+
     uint auctionIdCount;
 
     mapping(uint256 => Auction) auctionData;  //maps the _bidListingId to the bid
@@ -25,7 +28,6 @@ contract FXAuction {
     }
 
 
-
     struct GetAuction {
         uint auctionId;
         uint _bidsAllocatedFunds;  //Keeps track of how many have been issued
@@ -40,6 +42,7 @@ contract FXAuction {
         uint highestBidPrice;
     }
 
+
     struct SubmitAuction {
         uint rbzUSDBalance;
         string auctionTitle;
@@ -50,33 +53,6 @@ contract FXAuction {
         uint highestBidPrice;
     }
 
-    constructor() {
-    }
-
-    event BidSubmitted (
-        FxBidForm bid
-    );
-
-
-    event AuctionCreated (
-        uint indexed auctionId,
-        uint rbzUSDBalance,
-        uint rbzZWLBalance,
-        string auctionTitle,
-        string auctionType,
-        uint startTime,
-        uint endTime,
-        uint lowestBidPrice,
-        uint highestBidPrice
-    );
-    event BidAllocatedFunds (
-        FxBidForm bid
-    );
-
-
-    event TestEvent (
-        string message
-    );
 
     struct FxBidForm {
         uint fxBidFormListingId;  //identifies a bid
@@ -110,6 +86,30 @@ contract FXAuction {
         bool allocationStatus;
     }
 
+
+    event BidSubmitted (
+        FxBidForm bid
+    );
+
+
+    event AuctionCreated (
+        uint indexed auctionId,
+        uint rbzUSDBalance,
+        uint rbzZWLBalance,
+        string auctionTitle,
+        string auctionType,
+        uint startTime,
+        uint endTime,
+        uint lowestBidPrice,
+        uint highestBidPrice
+    );
+
+
+    event BidAllocatedFunds (
+        FxBidForm bid
+    );
+
+
     function submitAuction(SubmitAuction memory newAuction) public {
 
         Auction storage a = auctionData[auctionIdCount];
@@ -121,10 +121,6 @@ contract FXAuction {
         a.endTime = newAuction.endTime;
         a.lowestBidPrice = newAuction.lowestBidPrice;
         a.highestBidPrice = newAuction.highestBidPrice;
-
-        emit TestEvent (
-            "testing"
-        );
 
         emit AuctionCreated (
             a.auctionId,
@@ -147,16 +143,12 @@ contract FXAuction {
         require(fxBidForm.bidExchangeRate <= auctionData[fxBidForm.auctionId].highestBidPrice, "Price above highest price");
         require(fxBidForm.zwlEquivalent <= fxBidForm.currentBalanceZWL, "Insufficient funds in bank account");     
         require(fxBidForm.bidAmountUSD >= fxBidForm.currentNostroBalanceUSD, "Bidder has sufficient USD in nostro accounts");  
-        // require(fxBidForm.bidAmountUSD >= 2500
-        //       && fxBidForm.bidAmountUSD <= 500000
-        //       && !((20000 < fxBidForm.bidAmountUSD) && (fxBidForm.bidAmountUSD < 50000)), "Bid amount is invalid");  
         require(fxBidForm.bidAmountUSD >= 2
               && fxBidForm.bidAmountUSD <= 500000
               && !((20000 < fxBidForm.bidAmountUSD) && (fxBidForm.bidAmountUSD < 50000)), "Bid amount is invalid");  
 
 
         fxBidForm.fxBidFormListingId = auctionData[fxBidForm.auctionId]._bidListingId;  //Generate a bid number
-        // uint zwlEquival = bidAmountUSD*bidExchangeRate;
 
          // mapping the new primary bid to our generated bif number
 
@@ -220,34 +212,11 @@ contract FXAuction {
         return allAuctions;
     }
 
-    // function sortBids() public view returns(FxBidForm[] memory) {
-        
-    //     uint numberOfPrimaryBids = _bidListingId;
-    //     uint currentIndex = 0;
-
-    //     BidDetails[] memory primaryBids = new BidDetails[](numberOfPrimaryBids);
-
-        
-    //     for(uint i = 0; i < numberOfPrimaryBids; i++) {
-    //             uint currentId = i;
-    //             BidDetails storage currentItem = primaryBidData[currentId];
-    //             primaryBids[currentIndex] = currentItem;
-    //             currentIndex += 1;
-    //     }
-
-    //     // Pass our primaryBids for sorting
-    //     quickSort(primaryBids, 0, numberOfPrimaryBids);
-
-    //     return primaryBids;
-    // }
 
     //Allocate funds passinf the sortedPrimaryBids
     function allocateFunds(
         FxBidForm[] memory bids  //Array of primaryBids
     ) public {
-        emit TestEvent (
-            "testing"
-        );
 
         uint auctionId = bids[0].auctionId;
         for (uint16 i = 0; i < bids.length; i++) {
@@ -276,29 +245,4 @@ contract FXAuction {
     function findPrimaryBidById(uint256 fxBidFormListingId, uint auctionId) public view returns(FxBidForm memory) {
         return auctionData[auctionId].primaryBidData[fxBidFormListingId];
     }
-
-
-    // function quickSort(FxBidForm[] memory bids, uint left, uint right) public view {
-    //     uint i = left;
-    //     uint j = right;
-    //     if (i == j) return;
-    //     uint pivotExchangeRate = bids[uint(left + (right - left) / 2)].bidExchangeRate; //pivotExchangeRate is the value at midpoint bids[i].amount
-    //     // require(pivotExchangeRate == 128, "Original pivot != 3");
-
-    //     while (i <= j) {
-    //         while (bids[uint(i)].bidExchangeRate < pivotExchangeRate) i++;
-    //         while (pivotExchangeRate < bids[uint(j)].bidExchangeRate) j--;
-    //         if (i <= j) {
-    //             (bids[uint(i)], bids[uint(j)]) = (bids[uint(j)], bids[uint(i)]);  //Assuming this is swapping
-    //             i++;
-    //             j--;
-    //         }
-    //     }
-    //     if (left < j){
-    //         quickSort(bids, left, j);
-    //     }
-    //     if (i < right){
-    //         quickSort(bids, i, right);
-    //     }
-    // }
 }

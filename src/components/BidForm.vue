@@ -399,28 +399,28 @@ export default ({
         today: new Date().toDateString(),
         testData: {
           fxBidFormListingId: 0,
-          applicantName: "Tafara Mbano 4",
+          applicantName: "",
           auctionId: 0,
           dateOfIncorporation: "",
           tradingCommencementDate: "",
-          identificationNumber: "0497985480",
-          categoryOfBidder: "PRIMARY",
-          physicalAddress: "6020 Westlea",
-          emailAddress: "tmmmbano@gmail.com",
-          contactNumber: "0783461408",
-          applicantBank: "NMB Bank",
-          auctionRef: "378479",
-          priorExhangeControlNumber: "N/A",
+          identificationNumber: "",
+          categoryOfBidder: "",
+          physicalAddress: "",
+          emailAddress: "",
+          contactNumber: "",
+          applicantBank: "",
+          auctionRef: "",
+          priorExhangeControlNumber: "",
           date: new Date().getTime(),
 
-          economicSector: "Manufacturing",
-          purposeOfFunds: "Raw Materials",
-          descriptionOfGoods: "Iron ore",
-          ultimateBeneficiary: "Zimbabwe",
-          bidAmountUSD: 10,
-          bidExchangeRate: 290,
+          economicSector: "",
+          purposeOfFunds: "",
+          descriptionOfGoods: "",
+          ultimateBeneficiary: "",
+          bidAmountUSD: 0,
+          bidExchangeRate: 0,
           zwlEquivalent: 0,
-          currentBalanceZWL: 10209793944,
+          currentBalanceZWL: 0,
           currentNostroBalanceUSD: 89,
 
           allocatedAmountBlance: 0,
@@ -510,26 +510,6 @@ export default ({
       },
 
       async submit(){
-
-      
-
-        // axios.get("https://localhost:8080/api/bnk-accounts",{
-        //   headers: {
-        //     'Access-Control-Allow-Origin': '*',
-        //     'Access-Control-Allow-Methods': '*',
-        //     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-        //     'Access-Control-Allow-Credentials': true
-        //   }
-        // })
-
-
-
-
-        // this.accountList = localStorage.getItem('accounts')
-
-        // console.log(this.accountList)
-
-
 
         console.log("ACCOUNT------------>>>>>>>>>"+this.account)
         this.testData.auctionId = parseInt(this.search)
